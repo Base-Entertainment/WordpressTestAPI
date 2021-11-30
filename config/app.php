@@ -161,12 +161,12 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Corcel\Laravel\CorcelServiceProvider::class,
+
 
         /*
          * Package Service Providers...
          */
-
+        Corcel\Laravel\CorcelServiceProvider::class,
         /*
          * Application Service Providers...
          */

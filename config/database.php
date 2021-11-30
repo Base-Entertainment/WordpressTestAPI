@@ -70,7 +70,7 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => 'wp_',
+            'prefix'    => 'wpdt_',
             'strict'    => false,
             'engine'    => null,
         ],
