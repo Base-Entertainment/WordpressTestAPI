@@ -7,7 +7,7 @@ use App\Http\Resources\UsersResource;
 use Corcel\Model\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Corcel\Model\User as User;
+use App\Models\User;
 
 
 class UsersController extends Controller

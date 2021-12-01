@@ -62,7 +62,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        'corcel' => [ // You can name this connection name as you wish  
+        'wordpress' => [ // You can name this connection name as you wish  
             'driver'    => 'mysql',
             'host'      => 'localhost',
             'database'  => env('DB_DATABASE', 'forge'),
