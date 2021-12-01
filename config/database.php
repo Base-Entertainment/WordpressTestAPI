@@ -54,7 +54,7 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => 'wpdt_',
+            'prefix' => "wpdt_",
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
@@ -62,7 +62,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-        'wordpress' => [ // You can name this connection name as you wish  
+        'wordpress' => [ // You can name this connection name as you wish
             'driver'    => 'mysql',
             'host'      => 'localhost',
             'database'  => env('DB_DATABASE', 'forge'),
