@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        MikeMcLin\WpPassword\WpPasswordProvider::class, // Hash Checking Package
 
         /*
          * Package Service Providers...

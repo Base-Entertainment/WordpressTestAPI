@@ -25,6 +25,7 @@ class UsersResource extends JsonResource
             'displayname' => $this->displayname,
             'role' => $this->capabilities, // (meta) wp_capabilities 
             'slug' => $this->slug, //slug
+
         ];
     }
 }

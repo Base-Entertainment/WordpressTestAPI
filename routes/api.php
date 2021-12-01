@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 // Public Routes
 Route::get('users', [UsersController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login']);
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{id}', [PostsController::class, 'show']);
 Route::get('/posts/count', [PostsController::class, 'count']);
