@@ -17,16 +17,43 @@ class User extends Corcel
     protected $connection = 'wordpress';
 
 
-
     public function __construct()
     {
-        $this->appends = array_push($this->appends, ['meta' => 'wpdt_capabilities']);
+        parent::__construct();
     }
+
 
     /**
      * @var array
      */
     protected static $aliases = [
-        'capabilities' => ['meta' => 'wpdt_capabilities'] // allias for user roles
+        'login' => 'user_login',
+        'email' => 'user_email',
+        'slug' => 'user_nicename',
+        'url' => 'user_url',
+        'nickname' => ['meta' => 'nickname'],
+        'first_name' => ['meta' => 'first_name'],
+        'last_name' => ['meta' => 'last_name'],
+        'description' => ['meta' => 'description'],
+        'capabilities' => ['meta' => 'wpdt_capabilities'],
+        'created_at' => 'user_registered',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'login',
+        'email',
+        'slug',
+        'url',
+        'nickname',
+        'first_name',
+        'last_name',
+        'avatar',
+        ['meta' => 'wpdt_capabilities'],
+        'created_at',
     ];
 }
