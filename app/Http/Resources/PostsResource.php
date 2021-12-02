@@ -19,9 +19,10 @@ class PostsResource extends JsonResource
             'type' => 'Posts',
             'attributes' => [
                 'post_author' => $this->author_id,
+                'slug' => $this->slug,
                 'title' => $this->title,
                 'content' => $this->content,
-                'created_date' => $this->created_at
+                'created_date' => $this->created_at,
             ]
         ];
     }

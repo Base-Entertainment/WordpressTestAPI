@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Corcel\Model\User as Corcel;
+use Laravel\Sanctum\HasApiTokens; // Sanctum
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Sanctum\HasApiTokens; // Sanctum
 
 
 class User extends Corcel

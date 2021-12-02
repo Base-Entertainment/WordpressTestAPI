@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PostsResource;
 use App\Http\Resources\UsersResource;
-use Corcel\Model\Post;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;

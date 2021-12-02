@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-// Protected routes
+// Protected routes (Need to be Authanticated before run these API routes)
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
+    Route::get('users', [UsersController::class, 'index']);
     Route::get('users/{id}', [UsersController::class, 'show']);
 });
 
 
 // Public Routes
-Route::get('users', [UsersController::class, 'index']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']); // Need to login before do Protected routes
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/posts/{id}', [PostsController::class, 'show']);
 Route::get('/posts/count', [PostsController::class, 'count']);
