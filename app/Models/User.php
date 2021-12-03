@@ -31,6 +31,7 @@ class User extends Corcel
         'email' => 'user_email',
         'slug' => 'user_nicename',
         'url' => 'user_url',
+        'displayname' => 'display_name',
         'nickname' => ['meta' => 'nickname'],
         'first_name' => ['meta' => 'first_name'],
         'last_name' => ['meta' => 'last_name'],
