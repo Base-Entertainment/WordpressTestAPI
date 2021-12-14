@@ -34,6 +34,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        //      VALIDATION RULES
+
         //$data = $request->all();
         $data = $request->json()->all();
 
@@ -44,16 +46,22 @@ class AuthController extends Controller
 
         $validator = Validator::make($data, $rules);
         if (!$validator->fails()) {
-            // Check email
+
+
+
+
+            //        CHECK EMAIL
             $user = User::where('user_email', $data['email'])->first();
 
-            // Check password
+
+
+            //      CHECK PASSWORD
             if (!$user || !WpPassword::check($data['password'], $user->user_pass)) {
                 return response([
                     'message' => 'Bad creds'
                 ], 401);
             }
-
+            //       CREATE AND SEND TOKEN 
             $token = $user->createToken('myapptoken')->plainTextToken;
             return  $response = [
                 'message' => "Giriş Başarılı",
@@ -63,6 +71,9 @@ class AuthController extends Controller
 
         return response()->json($validator->errors()->all(), 400);
     }
+
+
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
