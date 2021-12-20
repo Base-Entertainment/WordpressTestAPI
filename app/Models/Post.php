@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Corcel\Model\User as Corcel;
+use Corcel\Model\Post as Corcel;
 use Laravel\Sanctum\HasApiTokens; // Sanctum
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +23,7 @@ class Post extends Corcel
      * @var array
      */
     protected static $aliases = [
-
+        'id' => 'ID',
         'title' => 'post_title',
         'content' => 'post_content',
         'excerpt' => 'post_excerpt',
@@ -45,4 +45,9 @@ class Post extends Corcel
         'author_id', // required (Author first and last name, )
         'created_at', // required
     ];
+
+    public function scopeReal($query)
+    {
+        return $query->where('post_type', 'post');
+    }
 }
