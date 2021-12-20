@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Post;
 use Corcel\Model\User as Corcel;
 use Laravel\Sanctum\HasApiTokens; // Sanctum
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,4 +58,12 @@ class User extends Corcel
         ['meta' => 'wpdt_capabilities'],
         'created_at',
     ];
+    // public function realPosts() // Extend from 'realPost' (Post Model)
+    // {
+    //     return $this->posts()->where('post_type', 'post');
+    // }
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'post_author');
+    }
 }

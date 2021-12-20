@@ -20,9 +20,15 @@ class UsersController extends Controller
     public function index()
     {
 
-        return UsersResource::collection(User::all());
+        return  response(UsersResource::collection(User::all()), 200)->withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8'
+        ]);
     }
+    public function userposts(User $user)
+    {
 
+        return response()->json(PostsResource::collection($user->posts()->real()->orderBy('post_date', 'desc')->limit(5)->get()), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -43,14 +49,18 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return new UsersResource($user);
+        return response(new UsersResource($user), 200)->withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8'
+        ]);
     }
 
 
     public function getPostsByID($id)
     {
         $user =  User::findOrFail($id)->posts()->get();
-        return PostsResource::collection($user);
+        return response(PostsResource::collection($user), 200)->withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8'
+        ]);
     }
 
     /**
