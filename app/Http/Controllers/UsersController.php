@@ -63,6 +63,18 @@ class UsersController extends Controller
         ]);
     }
 
+    public function me(Request $request){
+        $user = $request->user();
+        if($user != null){
+            return response()->json(new UsersResource($user), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+
+        }else{
+            return response([
+                'message' => 'Unauthorized.'
+            ], 401);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
