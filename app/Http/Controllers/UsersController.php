@@ -27,7 +27,7 @@ class UsersController extends Controller
     public function userposts(User $user)
     {
 
-        return response()->json(PostsResource::collection($user->posts()->real()->orderBy('post_date', 'desc')->limit(5)->get()), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return response()->json(PostsResource::collection($user->posts()->real()->published()->orderBy('post_date', 'desc')->limit(5)->get()), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
     /**
      * Store a newly created resource in storage.

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Public Routes
 Route::post('/login', [AuthController::class, 'login'])->name('login'); // Need to login before do Protected routes
 Route::get('/posts', [PostsController::class, 'index']);
+Route::get('/categories/{slug}/posts', [CategoryController::class, 'posts']);
+Route::get('/posts/{id}/suggestions', [PostsController::class, 'suggestions']);
 Route::get('/posts/count', [PostsController::class, 'count']);
 Route::get('users', [UsersController::class, 'index']);
 Route::get('users/{user}/posts', [UsersController::class, 'userposts']);

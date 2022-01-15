@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Corcel
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory;
 
     protected $table = "posts";
     protected $connection = "wordpress";

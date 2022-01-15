@@ -15,7 +15,7 @@ class PostsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => (string)$this->id,
+            'id' => (string)empty($this->id) ? (string)$this->ID : (string)$this->id,
             'title' => $this->title,
             'content' => $this->content,
             'created_date' => $this->created_at,

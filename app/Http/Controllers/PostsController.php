@@ -23,7 +23,7 @@ class PostsController extends Controller
         //     'Content-Type' => 'application/json;charset=UTF-8',
         //     'Charset' => 'UTF-8'
         // ]);
-        return response()->json(PostsResource::collection(Post::real()->orderBy('post_date', 'desc')->limit(5)->get()), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return response()->json(PostsResource::collection(Post::type('post')->published()->orderBy('post_date', 'desc')->limit(5)->get()), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
 
@@ -80,5 +80,25 @@ class PostsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function suggestions($id){
+        try{
+            $post = Post::type("post")->published()->findOrFail($id);
+
+            $taxonomy = $post->taxonomies()->category()->firstOrFail();
+
+
+
+            $posts = Post::type("post")->published()->where('ID', "<>", $post->id )->taxonomy("category", $taxonomy->name)->orderBy("post_date")->limit(4)->get();
+
+
+
+            return response()->json(PostsResource::collection($posts), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        }catch(ModelNotFoundException $e){
+            return response()->json(["message"=> "No post exists with this id"], 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        }
+
+
     }
 }
