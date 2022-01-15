@@ -7,25 +7,29 @@ use App\Models\Post;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Resources\PostsSummaryResource;
 
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        // return response()->json(PostsResource::collection(
-        //     Post::limit(2)->get()
-        // ), 200)->withHeaders([
-        //     'Content-Type' => 'application/json;charset=UTF-8',
-        //     'Charset' => 'UTF-8'
-        // ]);
-        return response()->json(PostsResource::collection(Post::type('post')->published()->orderBy('post_date', 'desc')->limit(5)->get()), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
-    }
 
+
+    /**
+     * List latest posts as summary
+     */
+    public function index(Request $request){
+
+        //TODO: add post_format filter
+        $posts = Post::type('post')->published()->orderBy('post_date', 'desc')->limit(5)->get();
+
+
+        $resourced = PostsSummaryResource::collection($posts);
+
+
+        return response()->json($resourced,
+        200,
+        ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE);
+    }
 
     public function count()
     {
@@ -57,6 +61,14 @@ class PostsController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json('Model Not Found', 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    public function get(int $id){
+        $post = Post::type("post")->published()->where('id', $id)->first();
+        if($post != null){
+            return response()->json(new PostsResource($post), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        }
+        return response()->json(["message"=>"Post not found"], 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     /**

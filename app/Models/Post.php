@@ -50,4 +50,6 @@ class Post extends Corcel
     {
         return $query->where('post_type', 'post');
     }
+
+
 }

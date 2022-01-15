@@ -31,13 +31,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 // Public Routes
 Route::post('/login', [AuthController::class, 'login'])->name('login'); // Need to login before do Protected routes
 Route::get('/posts', [PostsController::class, 'index']);
-Route::get('/categories/{slug}/posts', [CategoryController::class, 'posts']);
-Route::get('/posts/{id}/suggestions', [PostsController::class, 'suggestions']);
+Route::get('/categories/{id}/posts', [CategoryController::class, 'posts'])->where('id', '[0-9]+');
+Route::get('/posts/{id}/suggestions', [PostsController::class, 'suggestions'])->where('id', '[0-9]+');
 Route::get('/posts/count', [PostsController::class, 'count']);
 Route::get('users', [UsersController::class, 'index']);
 Route::get('users/{user}/posts', [UsersController::class, 'userposts']);
-Route::get('/posts/{id}', [PostsController::class, 'show']);
+Route::get('/posts/{id}', [PostsController::class, 'get']);
 Route::get('/userposts/{id}', [UsersController::class, 'getPostsByID']);
+
+
 
 
 
