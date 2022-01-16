@@ -28,8 +28,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 
+Route::middleware(['throttle:login'])->group(function () {
+    Route::post('/login', [AuthController::class, 'login']); // Need to login before do Protected routes
+});
+
+
+
 // Public Routes
-Route::post('/login', [AuthController::class, 'login'])->name('login'); // Need to login before do Protected routes
+
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/categories/{id}/posts', [CategoryController::class, 'posts'])->where('id', '[0-9]+');
 Route::get('/posts/{id}/suggestions', [PostsController::class, 'suggestions'])->where('id', '[0-9]+');

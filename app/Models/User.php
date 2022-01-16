@@ -62,6 +62,10 @@ class User extends Corcel
     // {
     //     return $this->posts()->where('post_type', 'post');
     // }
+
+
+
+
     public function posts()
     {
         return $this->hasMany(Post::class, 'post_author');
