@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use MikeMcLin\WpPassword\Facades\WpPassword as WpPassword;
+
 
 class AuthController extends Controller
 {
+
+
+
     // public function register(Request $request)
     // {
     //     $fields = $request->validate([
@@ -43,6 +48,8 @@ class AuthController extends Controller
             'email' => 'required|string',
             'password' => 'required|string'
         ];
+
+
 
         $validator = Validator::make($data, $rules);
         if (!$validator->fails()) {
