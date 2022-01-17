@@ -15,7 +15,7 @@ class PostsSummaryResource extends JsonResource{
             'post_date' => $this->post_date,
             'format' => $this->getFormat() ? Str::lower($this->getFormat()) : 'article',
             'author' => $this->author_id,
-            'categories' => CategoriesResource::collection($this->taxonomies()->category()->get()),
+            'categories' => CategoryResource::collection($this->taxonomies()->category()->get()),
             'thumbnail' => $this->image
         ];
     }
