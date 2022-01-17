@@ -74,7 +74,7 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('login', function (Request $request) {
             return [
                 Limit::perMinutes(60, 50)->by($request->ip()),
-                Limit::perMinutes(10, 5)->by($request->input('email')->response('MEvcut E-mail ile çok fazla giriş yaptınız. Lütfen 10 dakika sonra tekrar deneyiniz', 429)),
+                Limit::perMinutes(10, 5)->by($request->input('email')),
             ];
         });
     }
