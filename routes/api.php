@@ -38,6 +38,7 @@ Route::middleware(['throttle:login'])->group(function () {
 
 Route::get('/posts', [PostsController::class, 'index']);
 Route::get('/categories/{id}/posts', [CategoryController::class, 'posts'])->where('id', '[0-9]+');
+Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/posts/{id}/suggestions', [PostsController::class, 'suggestions'])->where('id', '[0-9]+');
 Route::get('/posts/count', [PostsController::class, 'count']);
 Route::get('users', [UsersController::class, 'index']);

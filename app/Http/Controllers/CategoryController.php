@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PostsResource;
+use App\Http\Resources\CategorySummaryResource;
 use App\Http\Resources\PostsSummaryResource;
-use App\Models\Post;
-use Corcel\Model\Category;
 use Corcel\Model\Taxonomy;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class CategoryController extends Controller
 {
@@ -22,5 +17,12 @@ class CategoryController extends Controller
         } else {
             return response()->json([], 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    public function index(){
+        $categories = Taxonomy::category()->where('count','>', 0)->with('posts')->get();
+
+        return CategorySummaryResource::collection($categories);
+
     }
 }
