@@ -4,7 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategorySummaryResource;
 use App\Http\Resources\PostsSummaryResource;
+use App\Models\Post as ModelsPost;
+use Corcel\Model\Post as ModelPost;
 use Corcel\Model\Taxonomy;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\Request;
+use Post\Model\Post;
+
+
+
 
 class CategoryController extends Controller
 {
@@ -19,10 +27,16 @@ class CategoryController extends Controller
         }
     }
 
-    public function index(){
-        $categories = Taxonomy::category()->where('count','>', 0)->with('posts')->get();
+    public function index()
+    {
+        $cat = Taxonomy::category()->orderBy("term_taxonomy_id")->get();
 
-        return CategorySummaryResource::collection($categories);
 
+        return response()->json($cat, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        // $cat = Taxonomy::where('taxonomy', 'category')->with('posts')->get();
+
+        // $resourced = CategorySummaryResource::collection($cat);
+
+        // return response()->json($cat, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 }

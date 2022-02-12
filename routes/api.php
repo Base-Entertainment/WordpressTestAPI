@@ -45,6 +45,8 @@ Route::get('users', [UsersController::class, 'index']);
 Route::get('users/{user}/posts', [UsersController::class, 'userposts']);
 Route::get('/posts/{id}', [PostsController::class, 'get']);
 Route::get('/userposts/{id}', [UsersController::class, 'getPostsByID']);
+Route::get('/profiles/{id}', [UsersController::class, 'userDetailed'])->where('id', '[0-9]+');
+Route::get('/videos', [PostsController::class, 'videos']);
 
 
 

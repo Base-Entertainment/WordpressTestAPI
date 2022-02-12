@@ -8,7 +8,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
-
+use App\Http\Resources\ProfileResource;
 
 class UsersController extends Controller
 {
@@ -54,7 +54,14 @@ class UsersController extends Controller
         ]);
     }
 
+    public function userDetailed($id)
+    {
+        $user = User::findOrFail($id);
 
+        return response()->json(new ProfileResource($user), 200)->withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8'
+        ]);
+    }
     public function getPostsByID($id)
     {
         $user =  User::findOrFail($id)->posts()->get();
@@ -63,12 +70,12 @@ class UsersController extends Controller
         ]);
     }
 
-    public function me(Request $request){
+    public function me(Request $request)
+    {
         $user = $request->user();
-        if($user != null){
+        if ($user != null) {
             return response()->json(new UsersResource($user), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
-
-        }else{
+        } else {
             return response([
                 'message' => 'Unauthorized.'
             ], 401);
