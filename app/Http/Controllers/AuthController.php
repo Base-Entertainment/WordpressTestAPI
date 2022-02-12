@@ -64,14 +64,11 @@ class AuthController extends Controller
 
             //      CHECK PASSWORD
             if (!$user || !WpPassword::check($data['password'], $user->user_pass)) {
-                return response([
-                    'message' => 'Bad creds'
-                ], 401);
+                return response(null, 401);
             }
             //       CREATE AND SEND TOKEN 
             $token = $user->createToken('myapptoken')->plainTextToken;
             return  $response = [
-
                 'token' => $token
             ];
         }
