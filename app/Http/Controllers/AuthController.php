@@ -71,7 +71,7 @@ class AuthController extends Controller
             //       CREATE AND SEND TOKEN 
             $token = $user->createToken('myapptoken')->plainTextToken;
             return  $response = [
-                'message' => "Giriş Başarılı",
+
                 'token' => $token
             ];
         }
@@ -83,9 +83,12 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        return [
-            'message' => 'Logged Out'
-        ];
+        $token = $request->user()->currentAccessToken()->delete();
+
+        if (Auth::check($request->user)) {
+            return response()->json("Token couldn't delete");
+        } else {
+            return response()->json(null, 200);
+        }
     }
 }
