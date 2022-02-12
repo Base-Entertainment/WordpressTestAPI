@@ -16,7 +16,8 @@ class PostsController extends Controller
     /**
      * List latest posts as summary
      */
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         //TODO: add post_format filter
         $posts = Post::type('post')->published()->orderBy('post_date', 'desc')->limit(5)->get();
@@ -25,10 +26,12 @@ class PostsController extends Controller
         $resourced = PostsSummaryResource::collection($posts);
 
 
-        return response()->json($resourced,
-        200,
-        ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
-        JSON_UNESCAPED_UNICODE);
+        return response()->json(
+            $resourced,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
     public function count()
@@ -44,6 +47,18 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+    }
+
+    public function videos()
+    {
+        $videos = Post::type('video')->get();
+        $resourced = PostsSummaryResource::collection($videos);
+        return response()->json(
+            $resourced,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
 
@@ -63,12 +78,13 @@ class PostsController extends Controller
         }
     }
 
-    public function get(int $id){
+    public function get(int $id)
+    {
         $post = Post::type("post")->published()->where('id', $id)->first();
-        if($post != null){
+        if ($post != null) {
             return response()->json(new PostsResource($post), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
-        return response()->json(["message"=>"Post not found"], 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        return response()->json(["message" => "Post not found"], 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -94,23 +110,22 @@ class PostsController extends Controller
         //
     }
 
-    public function suggestions($id){
-        try{
+    public function suggestions($id)
+    {
+        try {
             $post = Post::type("post")->published()->findOrFail($id);
 
             $taxonomy = $post->taxonomies()->category()->firstOrFail();
 
 
 
-            $posts = Post::type("post")->published()->where('ID', "<>", $post->id )->taxonomy("category", $taxonomy->name)->orderBy("post_date")->limit(4)->get();
+            $posts = Post::type("post")->published()->where('ID', "<>", $post->id)->taxonomy("category", $taxonomy->name)->orderBy("post_date")->limit(4)->get();
 
 
 
             return response()->json(PostsResource::collection($posts), 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
-        }catch(ModelNotFoundException $e){
-            return response()->json(["message"=> "No post exists with this id"], 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(["message" => "No post exists with this id"], 404, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         }
-
-
     }
 }
