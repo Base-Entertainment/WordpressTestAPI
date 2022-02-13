@@ -29,6 +29,10 @@ class CategoryController extends Controller
 
     public function index()
     {
+        $cat = Taxonomy::category()->orderBy("term_taxonomy_id")->get();
+
+
+        return response()->json($cat, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'], JSON_UNESCAPED_UNICODE);
         // $cat = Taxonomy::where('taxonomy', 'category')->with('posts')->get();
 
         // $resourced = CategorySummaryResource::collection($cat);

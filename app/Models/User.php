@@ -7,7 +7,7 @@ use Corcel\Model\User as Corcel;
 use Laravel\Sanctum\HasApiTokens; // Sanctum
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Carbon;
 
 class User extends Corcel
 {
@@ -17,6 +17,7 @@ class User extends Corcel
     protected $table = 'users';
     protected $connection = 'wordpress';
 
+    protected $expires_at;
 
     public function __construct()
     {
@@ -64,7 +65,13 @@ class User extends Corcel
     // }
 
 
-
+    public function tokenValid()
+    {
+        if (Carbon::parse($this->expires_at)) {
+            return true;
+        }
+        return false;
+    }
 
     public function posts()
     {

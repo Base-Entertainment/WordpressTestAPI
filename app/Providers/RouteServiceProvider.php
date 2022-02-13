@@ -72,14 +72,33 @@ class RouteServiceProvider extends ServiceProvider
         //         Limit::perMinute(3)->by($request->input('email')),
         //     ];
         // });
-        if(!App::environment('local')){
+        if (!App::environment('local')) {
             RateLimiter::for('login', function (Request $request) {
                 return [
                     Limit::perMinutes(60, 50)->by($request->ip()),
-                    Limit::perMinutes(10, 5)->by($request->input('email')),
+                    Limit::perMinutes(1, 5)->by($request->input('email'))->response(function () {
+                        return response([
+                            'message' => 'Unauthorized.'
+                        ], 401);
+                    }),
+                ];
+            });
+        } else {
+            RateLimiter::for('login', function (Request $request) {
+                return [
+                    // Limit::perMinutes(60, 50)->by($request->ip()),
+                    // Limit::perMinutes(1, 5)->by($request->input('email'))->response(function () {
+                    //     return response([
+                    //         'message' => 'Unauthorized.'
+                    //     ], 401);
+                    // }),
+                    Limit::none()->by($request->input('email'))->response(function () {
+                        return response([
+                            'message' => 'Unauthorized.'
+                        ], 401);
+                    }),
                 ];
             });
         }
-
     }
 }
